@@ -12,6 +12,7 @@ const player2Button = document.getElementById('player2Button');
 const player2DisplayName = document.getElementById('playerName2');
 const playComputerButton = document.getElementById('playComputerButton');
 const winnerMesasge = document.getElementById('winnerMessage');
+const resetButton = document.getElementById('resetButton');
 
 
 //function adds rows and checks for winner
@@ -31,41 +32,39 @@ const addrows  = () => {
 
     for(let i = 0; i < 8; i++){
         if (rows[i] === 3){
-            winnerMessage.innerText = "Player 1 Wins! (click to play again)";
+            winnerMessage.innerText = "Player 1 Wins! (click here to play again)";
             state.winner = true;
         }
         else if (rows[i] === 12){
-            winnerMessage.innerText = "Player 2 Wins! (click to play again)";
+            winnerMessage.innerText = "Player 2 Wins! (click here to play again)";
             state.winner = true;
         }
     }    
 }
 
-
+//adds player 1 name
 player1Button.addEventListener('click', () => { 
     const player1Input = document.getElementById('player1Input').value;   
     player1DisplayName.innerText = player1Input;
     document.getElementById('player1Input').style.display = 'none';
     document.getElementById('player1Button').style.display = 'none';
 })
-
+//player 2 name
 player2Button.addEventListener('click', () => { 
     const player2Input = document.getElementById('player2Input').value;   
     player2DisplayName.innerText = player2Input;
     document.getElementById('player2Input').style.display = 'none';
     document.getElementById('player2Button').style.display = 'none';
     document.getElementById('playComputerButton').style.display = 'none';
-    document.getElementById('or').style.display = 'none';
     
 })
-
+//starts the computer playing
 playComputerButton.addEventListener('click', () => {
     //hide everything
     player2DisplayName.innerText = "Computer";
     document.getElementById('player2Input').style.display = 'none';
     document.getElementById('player2Button').style.display = 'none';
     document.getElementById('playComputerButton').style.display = 'none';
-    document.getElementById('or').style.display = 'none';
 
     //capture player input and do a random move if its computer turn
     for(let i = 0; i < cells.length;i++){
@@ -94,16 +93,16 @@ playComputerButton.addEventListener('click', () => {
     }
     
 })
-
+//changes tiles depending on clicks and adjusts whos turn it is
 for(let i = 0; i < cells.length;i++){
     cells[i].addEventListener('click', () => {
-        if (state.playerTurn === true && state.board[i] === 0){
+        if (state.playerTurn === true && state.board[i] === 0 && state.winner === false){
             cells[i].innerText = 'O';
             state.playerTurn = false;
             state.board[i] = 1;
             addrows();
         }
-        else if (state.playerTurn === false && state.board[i] === 0) {
+        else if (state.playerTurn === false && state.board[i] === 0 && state.winner === false) {
             cells[i].innerText = 'X';
             state.playerTurn = true;
             state.board[i] = 4;
@@ -113,6 +112,22 @@ for(let i = 0; i < cells.length;i++){
     if(state.winner === true)
         break;
 }
-
+//resets everything back if clicking on the bottom banner
+resetButton.addEventListener('click', () => {
+        document.getElementById('player1Input').style.display = 'initial';
+        document.getElementById('player1Button').style.display = 'initial';
+        document.getElementById('player2Input').style.display = 'initial';
+        document.getElementById('player2Button').style.display = 'initial';
+        document.getElementById('playComputerButton').style.display = 'initial';
+        player1DisplayName.innerText = "Player 1";
+        player2DisplayName.innerText = "Player 2";
+        winnerMesasge.innerText = "Who will win?"
+        for(let i = 0; i < cells.length; i++){
+            cells[i].innerText = '?';
+            state.board[i] = 0;
+        }
+        state.winner = false;
+        state.playerTurn = true;
+})
 
 

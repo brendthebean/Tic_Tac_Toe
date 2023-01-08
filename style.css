@@ -54,3 +54,7 @@ footer {
     border-bottom: 3px solid white;
 }
 
+#playComputerButton {
+    justify-content: center;
+}
+
