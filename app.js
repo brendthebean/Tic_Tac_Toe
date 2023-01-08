@@ -29,14 +29,14 @@ const addrows  = () => {
     //diagonals
     rows[6] = state.board[0] + state.board[4] + state.board[8];
     rows[7] = state.board[2] + state.board[4] + state.board[6];
-
+    //runs through and checks for a win
     for(let i = 0; i < 8; i++){
         if (rows[i] === 3){
-            winnerMessage.innerText = "Player 1 Wins! (click here to play again)";
+            winnerMessage.innerText = `${player1DisplayName.innerText} wins! (click here to play again)`;
             state.winner = true;
         }
         else if (rows[i] === 12){
-            winnerMessage.innerText = "Player 2 Wins! (click here to play again)";
+            winnerMessage.innerText = `${player2DisplayName.innerText} wins! (click here to play again)`;
             state.winner = true;
         }
     }    
